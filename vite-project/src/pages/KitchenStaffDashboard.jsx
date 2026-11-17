@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { useApp } from '../context/AppContext';
 import Navbar from '../components/Navbar';
+import Footer from '../components/Footer';
 import {
   UtensilsCrossed,
   Clock,
@@ -21,7 +22,7 @@ export default function KitchenStaffDashboard() {
   const activeOrders = orders.filter((o) => o.status !== 'Delivered');
 
   return (
-    <div className="min-h-screen bg-slate-50 text-slate-900 font-sans">
+    <div className="min-h-screen bg-slate-50 text-slate-900 font-sans flex flex-col justify-between">
       <Navbar />
 
       <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-6">
@@ -39,7 +40,7 @@ export default function KitchenStaffDashboard() {
                 Kitchen Team & Chef Dashboard
               </h1>
               <p className="text-xs text-slate-500 mt-0.5">
-                {currentHotel.name} • Live customer QR orders & Express REST API synced
+                Live customer QR orders & KDS cooking queue
               </p>
             </div>
           </div>
@@ -237,6 +238,8 @@ export default function KitchenStaffDashboard() {
           </div>
         )}
       </main>
+
+      <Footer />
     </div>
   );
 }

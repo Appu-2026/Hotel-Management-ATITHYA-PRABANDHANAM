@@ -23,6 +23,26 @@ const hotelSchema = new mongoose.Schema(
     monthlyFee: { type: Number, default: 2999 },
     rating: { type: Number, default: 4.8 },
     reviewsCount: { type: Number, default: 1420 },
+    // Business Operations & Service Classifications
+    dietaryType: {
+      type: String,
+      enum: ['Pure Veg', 'Non-Veg', 'Both (Veg & Non-Veg)'],
+      default: 'Both (Veg & Non-Veg)'
+    },
+    serviceType: {
+      type: String,
+      enum: ['Table Service', 'Buffet System', 'Both (Table & Buffet)'],
+      default: 'Table Service'
+    },
+    parcelService: {
+      type: Boolean,
+      default: true
+    },
+    branchType: {
+      type: String,
+      enum: ['Single Branch', 'Multiple Branches'],
+      default: 'Single Branch'
+    },
     fssaiNo: { type: String, default: '10021011000452' },
     gstin: { type: String, default: '07AAAAA0000A1Z5' },
     healthAuditScore: { type: String, default: '98/100 (A+ Grade)' },

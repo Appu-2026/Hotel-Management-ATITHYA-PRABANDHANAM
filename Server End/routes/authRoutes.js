@@ -61,7 +61,20 @@ router.post('/login', async (req, res) => {
 // POST /api/auth/register-hotel
 router.post('/register-hotel', async (req, res) => {
   try {
-    const { name, code, ownerName, ownerEmail, password, phone, address, plan } = req.body;
+    const {
+      name,
+      code,
+      ownerName,
+      ownerEmail,
+      password,
+      phone,
+      address,
+      plan,
+      dietaryType,
+      serviceType,
+      parcelService,
+      branchType
+    } = req.body;
     if (!name || !ownerEmail || !password) {
       return res.status(400).json({ success: false, message: 'Hotel Name, Owner Email, and Password required.' });
     }
@@ -75,7 +88,11 @@ router.post('/register-hotel', async (req, res) => {
       ownerEmail,
       phone: phone || '',
       address: address || '',
-      plan: plan || 'Pro Manager'
+      plan: plan || 'Pro Manager',
+      dietaryType: dietaryType || 'Both (Veg & Non-Veg)',
+      serviceType: serviceType || 'Table Service',
+      parcelService: parcelService !== undefined ? parcelService : true,
+      branchType: branchType || 'Single Branch'
     });
 
     const salt = await bcrypt.genSalt(10);

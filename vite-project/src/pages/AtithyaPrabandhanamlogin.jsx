@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import { useApp } from '../context/AppContext';
 import Navbar from '../components/Navbar';
+import Footer from '../components/Footer';
 import {
   ShieldCheck,
   Building2,
@@ -525,6 +526,8 @@ export default function AtithyaPrabandhanamlogin() {
 
         </div>
       </main>
+
+      <Footer isDark={true} />
     </div>
   );
 }

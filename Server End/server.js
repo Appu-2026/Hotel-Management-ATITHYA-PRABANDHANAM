@@ -82,7 +82,11 @@ app.get('/api/seed', async (req, res) => {
         gstin: '29AAAAA8888A1Z9',
         healthAuditScore: '99/100 (A+ Grade)',
         tradeLicense: 'TL-BLR-2026-9912',
-        legalCertificate: 'Certified Food Safety & Outdoor Catering Compliant by FSSAI & BBMP'
+        legalCertificate: 'Certified Food Safety & Outdoor Catering Compliant by FSSAI & BBMP',
+        dietaryType: 'Pure Veg',
+        serviceType: 'Table Service',
+        parcelService: true,
+        branchType: 'Single Branch'
       }
     ];
     await Hotel.insertMany(seedHotels);

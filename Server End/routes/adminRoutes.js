@@ -15,7 +15,21 @@ router.get('/hotels', async (req, res) => {
 // POST /api/admin/hotels (Provision new client hotel license)
 router.post('/hotels', async (req, res) => {
   try {
-    const { name, code, ownerName, ownerEmail, phone, address, plan, monthlyFee, maxTables } = req.body;
+    const {
+      name,
+      code,
+      ownerName,
+      ownerEmail,
+      phone,
+      address,
+      plan,
+      monthlyFee,
+      maxTables,
+      dietaryType,
+      serviceType,
+      parcelService,
+      branchType
+    } = req.body;
     if (!name || !ownerEmail) {
       return res.status(400).json({ success: false, message: 'Hotel Name and Owner Email required.' });
     }
@@ -31,7 +45,11 @@ router.post('/hotels', async (req, res) => {
       address: address || '',
       plan: plan || 'Pro Manager',
       monthlyFee: monthlyFee || 2999,
-      maxTables: maxTables || 20
+      maxTables: maxTables || 20,
+      dietaryType: dietaryType || 'Both (Veg & Non-Veg)',
+      serviceType: serviceType || 'Table Service',
+      parcelService: parcelService !== undefined ? parcelService : true,
+      branchType: branchType || 'Single Branch'
     });
 
     res.status(201).json({

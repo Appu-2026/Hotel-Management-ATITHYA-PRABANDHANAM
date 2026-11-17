@@ -1,6 +1,7 @@
 import React from 'react';
 import { useApp } from '../context/AppContext';
 import Navbar from '../components/Navbar';
+import Footer from '../components/Footer';
 import {
   Truck,
   Bell,
@@ -19,7 +20,7 @@ export default function DeliveryStaffDashboard() {
   const completedOrders = orders.filter((o) => o.status === 'Delivered');
 
   return (
-    <div className="min-h-screen bg-slate-50 text-slate-900 font-sans">
+    <div className="min-h-screen bg-slate-50 text-slate-900 font-sans flex flex-col justify-between">
       <Navbar />
 
       <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-6">
@@ -37,7 +38,7 @@ export default function DeliveryStaffDashboard() {
                 Floor Dispatch Dashboard
               </h1>
               <p className="text-xs text-slate-500 mt-0.5">
-                {currentHotel.name} • Deliver prepared kitchen dishes & respond to customer calls
+                Deliver prepared kitchen dishes & attend guest table service calls
               </p>
             </div>
           </div>
@@ -172,6 +173,8 @@ export default function DeliveryStaffDashboard() {
           </div>
         </div>
       </main>
+
+      <Footer />
     </div>
   );
 }

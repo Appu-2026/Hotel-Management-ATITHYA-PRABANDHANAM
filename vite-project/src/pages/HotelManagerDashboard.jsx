@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { useApp } from '../context/AppContext';
 import Navbar from '../components/Navbar';
+import Footer from '../components/Footer';
 import QRCodeModal from '../components/QRCodeModal';
 import {
   Building2,
@@ -122,34 +123,23 @@ export default function HotelManagerDashboard() {
   };
 
   return (
-    <div className="min-h-screen bg-slate-50 text-slate-900 font-sans">
+    <div className="min-h-screen bg-slate-50 text-slate-900 font-sans flex flex-col justify-between">
       <Navbar />
 
       <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-8">
-        {/* Hotel Manager Header */}
-        <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 border-b border-slate-200 pb-6">
+        {/* Manager Workspace Header */}
+        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 border-b border-slate-200 pb-4">
           <div>
-            <div className="flex items-center gap-2 text-sky-700 text-xs font-bold uppercase tracking-wider mb-1">
-              <Building2 className="w-4 h-4" /> Hotel Executive Manager Suite
+            <div className="text-xs font-bold text-sky-700 uppercase tracking-wider mb-0.5">
+              Hotel Operations & Management
             </div>
-            <h1 className="text-3xl font-extrabold text-slate-900 tracking-tight">
-              {currentHotel.name}
-            </h1>
-            <p className="text-slate-500 text-xs mt-1 flex items-center gap-3 flex-wrap font-medium">
-              <span>Code: {currentHotel.code}</span>
-              <span>•</span>
-              <span>Address: {currentHotel.address}</span>
-              <span>•</span>
-              <span className="text-emerald-700 font-bold bg-emerald-50 px-2 py-0.5 rounded-full border border-emerald-200">
-                FSSAI Lic: {currentHotel.fssaiNo || '10021011000452'}
-              </span>
-            </p>
+            <h2 className="text-2xl font-black text-slate-900 tracking-tight">
+              Executive Manager Suite
+            </h2>
           </div>
-
-          <div className="flex items-center gap-2 bg-white border border-slate-200 p-2.5 rounded-2xl shadow-sm">
-            <span className="text-xs text-slate-500 font-medium">Powered by ATITHYA PRABANDHANAM:</span>
-            <span className="text-xs font-mono font-bold text-sky-800 bg-sky-50 px-2.5 py-1 rounded-lg border border-sky-200">
-              {currentHotel.id}
+          <div className="flex items-center gap-2">
+            <span className="px-3 py-1 rounded-full text-xs font-bold bg-emerald-50 text-emerald-700 border border-emerald-200 flex items-center gap-1.5">
+              <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" /> Live Operational
             </span>
           </div>
         </div>
@@ -734,6 +724,8 @@ export default function HotelManagerDashboard() {
         tableData={selectedQRTable}
         hotelName={currentHotel.name}
       />
+
+      <Footer />
     </div>
   );
 }

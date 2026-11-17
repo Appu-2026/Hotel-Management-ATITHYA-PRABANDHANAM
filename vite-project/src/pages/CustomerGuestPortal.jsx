@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { useSearchParams } from 'react-router-dom';
 import { useApp } from '../context/AppContext';
 import Navbar from '../components/Navbar';
+import Footer from '../components/Footer';
 import {
   QrCode,
   UtensilsCrossed,
@@ -40,7 +41,7 @@ export default function CustomerGuestPortal() {
   const [selectedCategory, setSelectedCategory] = useState('All');
   const [searchQuery, setSearchQuery] = useState('');
   const [filterVegOnly, setFilterVegOnly] = useState(false);
-  const [viewMode, setViewMode] = useState('compact'); // 'compact' | 'grid' | 'detailed'
+  const [viewMode, setViewMode] = useState('grid'); // 'grid' (horizontal 2-column) | 'compact' | 'detailed'
 
   // Cart state: { itemId: quantity }
   const [cart, setCart] = useState({});
@@ -125,72 +126,31 @@ export default function CustomerGuestPortal() {
     : null;
 
   return (
-    <div className="min-h-screen bg-slate-50 text-slate-900 font-sans pb-32">
+    <div className="min-h-screen bg-slate-50 text-slate-900 font-sans flex flex-col justify-between">
       <Navbar />
 
-      {/* Sky Theme Hotel Banner & Compliance Header */}
-      <div className="bg-gradient-to-b from-sky-50 via-white to-slate-50 border-b border-sky-100 py-3 sm:py-6 px-3 sm:px-6">
-        <div className="max-w-4xl mx-auto space-y-2.5 sm:space-y-4">
-          <div className="flex flex-col md:flex-row md:items-center justify-between gap-2.5 sm:gap-4">
-            <div>
-              <div className="flex items-center gap-2 mb-1 flex-wrap">
-                <span className="px-2.5 py-0.5 rounded-full text-[11px] font-black bg-sky-600 text-white flex items-center gap-1 shadow-sm">
-                  <QrCode className="w-3.5 h-3.5" /> Scanned {tableNo}
-                </span>
-                <span className="text-[11px] font-bold text-sky-800 bg-sky-100 border border-sky-200 px-2 py-0.5 rounded-full">
-                  FSSAI Lic: {currentHotel.fssaiNo || '10021011000452'}
-                </span>
-              </div>
-
-              <h1 className="text-xl sm:text-3xl font-black text-slate-900 tracking-tight">
-                {currentHotel.name}
-              </h1>
-              <p className="text-[11px] sm:text-xs text-slate-500 mt-0.5 flex items-center gap-2 flex-wrap">
-                <span>{currentHotel.address}</span>
-                <span>•</span>
-                <span className="text-sky-800 font-bold flex items-center gap-1">
-                  <Star className="w-3.5 h-3.5 fill-amber-400 text-amber-500" /> {currentHotel.rating || '4.8'} ({currentHotel.reviewsCount || '1,420'} Reviews)
-                </span>
-              </p>
-            </div>
-
-            {/* Legal & FSSAI Report Button */}
-            <div className="flex items-center gap-2">
-              <button
-                onClick={() => setShowLegalModal(true)}
-                className="px-3 py-1.5 bg-sky-50 hover:bg-sky-100 text-sky-800 border border-sky-200 text-[11px] sm:text-xs font-bold rounded-xl flex items-center gap-1.5 shadow-sm transition-colors"
-              >
-                <ShieldCheck className="w-4 h-4 text-sky-600" /> View FSSAI & Legal Reports
-              </button>
-            </div>
+      {/* Guest Table & Digital Dining Bar */}
+      <div className="bg-white border-b border-slate-200 py-2 px-3 sm:px-6 shadow-sm">
+        <div className="max-w-4xl mx-auto flex items-center justify-between gap-2">
+          <div className="flex items-center gap-2">
+            <span className="px-2.5 py-0.5 rounded-full text-xs font-black bg-sky-600 text-white flex items-center gap-1 shadow-sm">
+              <QrCode className="w-3.5 h-3.5" /> {tableNo}
+            </span>
+            <span className="text-xs font-semibold text-slate-700">
+              {orderType}
+            </span>
           </div>
 
-          {/* Quick Guest Wi-Fi & Safety Badges */}
-          <div className="grid grid-cols-2 gap-2 sm:gap-3 pt-1">
-            <div className="flex items-center gap-2.5 bg-white border border-slate-200 p-2 sm:p-3 rounded-xl shadow-sm">
-              <div className="p-1.5 bg-sky-50 text-sky-700 rounded-lg shrink-0">
-                <Wifi className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
-              </div>
-              <div className="min-w-0">
-                <div className="text-[9px] sm:text-[10px] text-slate-400 uppercase font-semibold truncate">Guest Wi-Fi</div>
-                <div className="text-[11px] sm:text-xs font-bold text-slate-800 truncate">Atithya_Guest_5G</div>
-              </div>
-            </div>
-
-            <div className="flex items-center gap-2.5 bg-white border border-slate-200 p-2 sm:p-3 rounded-xl shadow-sm">
-              <div className="p-1.5 bg-emerald-50 text-emerald-700 rounded-lg shrink-0">
-                <Award className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
-              </div>
-              <div className="min-w-0">
-                <div className="text-[9px] sm:text-[10px] text-slate-400 uppercase font-semibold truncate">Hygiene Score</div>
-                <div className="text-[11px] sm:text-xs font-bold text-emerald-700 truncate">{currentHotel.healthAuditScore || '98/100 (A+)'}</div>
-              </div>
-            </div>
-          </div>
+          <button
+            onClick={() => setShowLegalModal(true)}
+            className="px-2.5 py-0.5 bg-sky-50 hover:bg-sky-100 text-sky-800 border border-sky-200 text-[11px] font-bold rounded-lg flex items-center gap-1 transition-colors"
+          >
+            <ShieldCheck className="w-3.5 h-3.5 text-sky-600" /> FSSAI
+          </button>
         </div>
       </div>
 
-      <main className="max-w-4xl mx-auto px-4 py-4 sm:py-6 space-y-4 sm:space-y-6">
+      <main className="flex-1 max-w-4xl mx-auto w-full px-3 sm:px-4 py-3 sm:py-6 space-y-4 pb-28">
         {/* Waiter Alert Notification */}
         {waiterCallAlert && (
           <div className="bg-sky-50 border border-sky-200 text-sky-900 p-3.5 sm:p-4 rounded-2xl flex items-center justify-between animate-fade-in shadow-sm">
@@ -352,7 +312,7 @@ export default function CustomerGuestPortal() {
 
         {/* Menu Dishes Container */}
         {viewMode === 'grid' ? (
-          /* 2-Column Grid Layout (Mobile App Grid Style - Shows 4-6 dishes on screen) */
+          /* 2-Column Grid Layout (Mobile App Grid Style - Horizontal pairs of dishes) */
           <div className="grid grid-cols-2 gap-2.5 sm:grid-cols-3">
             {filteredDishes.map((dish) => {
               const dishId = dish.id || dish.itemId;
@@ -361,47 +321,53 @@ export default function CustomerGuestPortal() {
               return (
                 <div
                   key={dishId}
-                  className="bg-white border border-slate-200 rounded-xl overflow-hidden shadow-sm flex flex-col justify-between hover:shadow-md transition-shadow"
+                  className="bg-white border border-slate-200 rounded-2xl overflow-hidden shadow-sm flex flex-col justify-between hover:shadow-md transition-shadow"
                 >
-                  <div className="relative">
+                  <div className="relative w-full h-28 sm:h-36 bg-slate-100 overflow-hidden">
                     <img
                       src={dish.image}
                       alt={dish.name}
-                      className="w-full h-24 sm:h-32 object-cover"
+                      className="w-full h-full object-cover hover:scale-105 transition-transform duration-300"
                     />
                     <span
-                      className={`absolute top-2 left-2 w-3 h-3 rounded-full border-2 shadow-sm ${
-                        dish.isVeg ? 'border-emerald-600 bg-emerald-100' : 'border-rose-600 bg-rose-100'
+                      className={`absolute top-2 left-2 w-4 h-4 rounded bg-white/95 backdrop-blur-sm border flex items-center justify-center shadow-sm ${
+                        dish.isVeg ? 'border-emerald-600' : 'border-rose-600'
                       }`}
-                    />
+                    >
+                      <span
+                        className={`w-2 h-2 rounded-full ${
+                          dish.isVeg ? 'bg-emerald-600' : 'bg-rose-600'
+                        }`}
+                      />
+                    </span>
                   </div>
 
                   <div className="p-2.5 flex-1 flex flex-col justify-between">
                     <div>
-                      <h3 className="font-bold text-slate-900 text-xs line-clamp-1">{dish.name}</h3>
-                      <div className="text-xs font-black text-sky-700 mt-1">₹{dish.price}</div>
+                      <h3 className="font-bold text-slate-900 text-xs sm:text-sm line-clamp-1">{dish.name}</h3>
+                      <div className="text-xs sm:text-sm font-black text-slate-900 mt-1">₹{dish.price}</div>
                     </div>
 
-                    <div className="mt-2">
+                    <div className="mt-2.5">
                       {qtyInCart === 0 ? (
                         <button
                           onClick={() => addToCart(dishId)}
-                          className="w-full py-1.5 bg-sky-600 hover:bg-sky-700 text-white font-bold text-xs rounded-lg shadow flex items-center justify-center gap-1"
+                          className="w-full py-1.5 bg-sky-600 hover:bg-sky-700 text-white font-bold text-xs rounded-xl shadow-sm flex items-center justify-center gap-1 transition-colors"
                         >
                           <Plus className="w-3.5 h-3.5" /> Add
                         </button>
                       ) : (
-                        <div className="flex items-center justify-between bg-sky-50 border border-sky-200 p-0.5 rounded-lg">
+                        <div className="flex items-center justify-between bg-sky-50 border border-sky-200 p-0.5 rounded-xl shadow-inner">
                           <button
                             onClick={() => removeFromCart(dishId)}
-                            className="p-1 rounded bg-white text-slate-800 border border-slate-200"
+                            className="w-6 h-6 rounded-lg bg-white text-slate-800 border border-slate-200 flex items-center justify-center font-bold shadow-sm"
                           >
                             <Minus className="w-3 h-3" />
                           </button>
-                          <span className="font-extrabold text-sky-700 text-xs">{qtyInCart}</span>
+                          <span className="font-black text-sky-800 text-xs">{qtyInCart}</span>
                           <button
                             onClick={() => addToCart(dishId)}
-                            className="p-1 rounded bg-sky-600 text-white font-bold"
+                            className="w-6 h-6 rounded-lg bg-sky-600 text-white flex items-center justify-center font-bold shadow-sm"
                           >
                             <Plus className="w-3 h-3" />
                           </button>
@@ -819,6 +785,24 @@ export default function CustomerGuestPortal() {
                   <span className="font-semibold text-slate-600">Hygiene & Safety Audit Grade:</span>
                   <span className="font-extrabold text-emerald-700">{currentHotel.healthAuditScore || '98/100 (A+ Grade)'}</span>
                 </div>
+                <div className="flex justify-between border-t border-stone-200/60 pt-2">
+                  <span className="font-semibold text-slate-600">Dietary Classification:</span>
+                  <span className="font-bold text-slate-800">{currentHotel.dietaryType || 'Both (Veg & Non-Veg)'}</span>
+                </div>
+                <div className="flex justify-between">
+                  <span className="font-semibold text-slate-600">Service & Dining Setup:</span>
+                  <span className="font-bold text-slate-800">{currentHotel.serviceType || 'Table Service'}</span>
+                </div>
+                <div className="flex justify-between">
+                  <span className="font-semibold text-slate-600">Parcel / Takeaway Service:</span>
+                  <span className="font-bold text-slate-800">
+                    {currentHotel.parcelService !== false ? 'Available (Packaging Provided)' : 'Dine-In Only'}
+                  </span>
+                </div>
+                <div className="flex justify-between">
+                  <span className="font-semibold text-slate-600">Branch Structure:</span>
+                  <span className="font-bold text-slate-800">{currentHotel.branchType || 'Single Branch'}</span>
+                </div>
               </div>
 
               <div className="p-3.5 bg-sky-50 border border-sky-200 rounded-xl text-sky-950 leading-relaxed">
@@ -835,6 +819,8 @@ export default function CustomerGuestPortal() {
           </div>
         </div>
       )}
+
+      <Footer />
     </div>
   );
 }

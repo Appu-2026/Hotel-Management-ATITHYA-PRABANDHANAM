@@ -21,6 +21,10 @@ const initialHotels = [
     monthlyFee: 4999,
     rating: 4.9,
     reviewsCount: 2840,
+    dietaryType: 'Pure Veg',
+    serviceType: 'Table Service',
+    parcelService: true,
+    branchType: 'Single Branch',
     fssaiNo: '11221002000584',
     gstin: '29AAAAA8888A1Z9',
     healthAuditScore: '99/100 (A+ Grade)',
@@ -42,6 +46,10 @@ const initialHotels = [
     monthlyFee: 4999,
     rating: 4.8,
     reviewsCount: 1420,
+    dietaryType: 'Both (Veg & Non-Veg)',
+    serviceType: 'Both (Table & Buffet)',
+    parcelService: true,
+    branchType: 'Multiple Branches',
     fssaiNo: '10021011000452',
     gstin: '07AAAAA0000A1Z5',
     healthAuditScore: '98/100 (A+ Grade)',
@@ -63,6 +71,10 @@ const initialHotels = [
     monthlyFee: 2999,
     rating: 4.7,
     reviewsCount: 980,
+    dietaryType: 'Both (Veg & Non-Veg)',
+    serviceType: 'Buffet System',
+    parcelService: false,
+    branchType: 'Single Branch',
     fssaiNo: '10022022000891',
     gstin: '08BBBBB1111B2Z6',
     healthAuditScore: '96/100 (A Grade)',
@@ -438,7 +450,21 @@ const initialFinances = {
 export const AppProvider = ({ children }) => {
   const [hotels, setHotels] = useState(() => {
     const saved = localStorage.getItem('atithya_hotels');
-    return saved ? JSON.parse(saved) : initialHotels;
+    if (saved) {
+      try {
+        const parsed = JSON.parse(saved);
+        return parsed.map((h) => ({
+          dietaryType: 'Both (Veg & Non-Veg)',
+          serviceType: 'Table Service',
+          parcelService: true,
+          branchType: 'Single Branch',
+          ...h
+        }));
+      } catch {
+        return initialHotels;
+      }
+    }
+    return initialHotels;
   });
 
   const [currentHotelId, setCurrentHotelId] = useState('H104');
@@ -526,6 +552,10 @@ export const AppProvider = ({ children }) => {
       healthAuditScore: '99/100 (A+ Grade)',
       tradeLicense: 'TL-2026-NEW',
       legalCertificate: 'Certified FSSAI & Municipal Health Compliant',
+      dietaryType: 'Both (Veg & Non-Veg)',
+      serviceType: 'Table Service',
+      parcelService: true,
+      branchType: 'Single Branch',
       ...newHotelData
     };
     setHotels([createdHotel, ...hotels]);
