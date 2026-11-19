@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import { useApp } from '../context/AppContext';
 import Navbar from '../components/Navbar';
-import Footer from '../components/Footer';
 import {
   UtensilsCrossed,
   Clock,
@@ -22,7 +21,7 @@ export default function KitchenStaffDashboard() {
   const activeOrders = orders.filter((o) => o.status !== 'Delivered');
 
   return (
-    <div className="min-h-screen bg-slate-50 text-slate-900 font-sans flex flex-col justify-between">
+    <div className="min-h-screen bg-slate-50 text-slate-900 font-sans">
       <Navbar />
 
       <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-6">
@@ -39,8 +38,9 @@ export default function KitchenStaffDashboard() {
               <h1 className="text-2xl font-black text-slate-900 tracking-tight">
                 Kitchen Team & Chef Dashboard
               </h1>
+
               <p className="text-xs text-slate-500 mt-0.5">
-                Live customer QR orders & KDS cooking queue
+                {currentHotel.name} • Live customer QR orders & Express REST API synced
               </p>
             </div>
           </div>
@@ -48,21 +48,19 @@ export default function KitchenStaffDashboard() {
           <div className="flex items-center gap-2">
             <button
               onClick={() => setActiveTab('kds')}
-              className={`px-4 py-2 text-xs font-bold rounded-xl transition-all flex items-center gap-2 ${
-                activeTab === 'kds'
-                  ? 'bg-sky-600 text-white shadow-md'
-                  : 'bg-white border border-slate-200 text-slate-700'
-              }`}
+              className={`px-4 py-2 text-xs font-bold rounded-xl transition-all flex items-center gap-2 ${activeTab === 'kds'
+                ? 'bg-sky-600 text-white shadow-md'
+                : 'bg-white border border-slate-200 text-slate-700'
+                }`}
             >
               <BellRing className="w-4 h-4" /> Active Cooking Orders ({activeOrders.length})
             </button>
             <button
               onClick={() => setActiveTab('inventory')}
-              className={`px-4 py-2 text-xs font-bold rounded-xl transition-all flex items-center gap-2 ${
-                activeTab === 'inventory'
-                  ? 'bg-sky-600 text-white shadow-md'
-                  : 'bg-white border border-slate-200 text-slate-700'
-              }`}
+              className={`px-4 py-2 text-xs font-bold rounded-xl transition-all flex items-center gap-2 ${activeTab === 'inventory'
+                ? 'bg-sky-600 text-white shadow-md'
+                : 'bg-white border border-slate-200 text-slate-700'
+                }`}
             >
               <Flame className="w-4 h-4" /> Kitchen Dish Availability
             </button>
@@ -87,13 +85,12 @@ export default function KitchenStaffDashboard() {
                 {activeOrders.map((ord) => (
                   <div
                     key={ord.id || ord.orderId}
-                    className={`rounded-2xl border p-5 flex flex-col justify-between shadow-sm transition-all ${
-                      ord.status === 'Pending'
-                        ? 'bg-white border-sky-400'
-                        : ord.status === 'Preparing'
+                    className={`rounded-2xl border p-5 flex flex-col justify-between shadow-sm transition-all ${ord.status === 'Pending'
+                      ? 'bg-white border-sky-400'
+                      : ord.status === 'Preparing'
                         ? 'bg-white border-emerald-500'
                         : 'bg-white border-purple-400'
-                    }`}
+                      }`}
                   >
                     <div>
                       {/* Card Header */}
@@ -110,13 +107,12 @@ export default function KitchenStaffDashboard() {
 
                         <div className="text-right">
                           <span
-                            className={`px-2.5 py-1 rounded-full text-[10px] font-extrabold uppercase tracking-wide ${
-                              ord.status === 'Pending'
-                                ? 'bg-sky-100 text-sky-900 animate-pulse'
-                                : ord.status === 'Preparing'
+                            className={`px-2.5 py-1 rounded-full text-[10px] font-extrabold uppercase tracking-wide ${ord.status === 'Pending'
+                              ? 'bg-sky-100 text-sky-900 animate-pulse'
+                              : ord.status === 'Preparing'
                                 ? 'bg-emerald-100 text-emerald-900'
                                 : 'bg-purple-100 text-purple-900'
-                            }`}
+                              }`}
                           >
                             {ord.status}
                           </span>
@@ -221,11 +217,10 @@ export default function KitchenStaffDashboard() {
 
                       <button
                         onClick={() => toggleItemAvailability(dishId)}
-                        className={`px-3 py-1.5 rounded-xl text-xs font-bold flex items-center gap-1.5 transition-colors ${
-                          item.available
-                            ? 'bg-emerald-100 text-emerald-800 border border-emerald-200'
-                            : 'bg-rose-100 text-rose-800 border border-rose-200'
-                        }`}
+                        className={`px-3 py-1.5 rounded-xl text-xs font-bold flex items-center gap-1.5 transition-colors ${item.available
+                          ? 'bg-emerald-100 text-emerald-800 border border-emerald-200'
+                          : 'bg-rose-100 text-rose-800 border border-rose-200'
+                          }`}
                       >
                         {item.available ? <Check className="w-4 h-4" /> : <XCircle className="w-4 h-4" />}
                         {item.available ? 'Available' : 'Out of Stock'}
@@ -238,8 +233,6 @@ export default function KitchenStaffDashboard() {
           </div>
         )}
       </main>
-
-      <Footer />
     </div>
   );
 }
